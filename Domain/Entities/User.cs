@@ -27,7 +27,7 @@ public sealed class User : BaseEntity
         if (!Enum.IsDefined(typeof(RoleEnum), role))
             throw new ArgumentException("Geçersiz rol.", nameof(role));
 
-        Id = Guid.NewGuid();
+        Id = Guid.CreateVersion7();
         Email = email;
         PasswordHash = passwordHash;
         Role = role;
