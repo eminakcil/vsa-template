@@ -1,4 +1,4 @@
-using VsaTemplate.Common.Entities;
+using VsaTemplate.Domain.Entities;
 
 namespace VsaTemplate.Common.Abstractions;
 

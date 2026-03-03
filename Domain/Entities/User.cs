@@ -1,7 +1,7 @@
 using VsaTemplate.Common.Abstractions;
 using VsaTemplate.Common.Constants;
 
-namespace VsaTemplate.Common.Entities;
+namespace VsaTemplate.Domain.Entities;
 
 public sealed class User : BaseEntity
 {

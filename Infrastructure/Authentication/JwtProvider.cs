@@ -6,7 +6,7 @@ using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using VsaTemplate.Common.Abstractions;
 using VsaTemplate.Common.Constants;
-using VsaTemplate.Common.Entities;
+using VsaTemplate.Domain.Entities;
 
 namespace VsaTemplate.Infrastructure.Authentication;
 

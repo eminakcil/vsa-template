@@ -3,7 +3,7 @@ namespace VsaTemplate.Infrastructure.Persistence;
 using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
 using VsaTemplate.Common.Abstractions;
-using VsaTemplate.Common.Entities;
+using VsaTemplate.Domain.Entities;
 
 public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(options)
 {

@@ -2,7 +2,7 @@ using FluentValidation;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using VsaTemplate.Common.Abstractions;
-using VsaTemplate.Common.Entities;
+using VsaTemplate.Domain.Entities;
 using VsaTemplate.Common.Models;
 using VsaTemplate.Extensions;
 using VsaTemplate.Infrastructure.Persistence;
