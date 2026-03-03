@@ -7,7 +7,7 @@ using VsaTemplate.Common.Extensions;
 using VsaTemplate.Common.Models;
 using VsaTemplate.Infrastructure.Persistence;
 
-namespace VsaTemplate.Features.Auth;
+namespace VsaTemplate.Features.Auth.RefreshToken;
 
 public record RefreshTokenCommand(string AccessToken, string RefreshToken)
     : IRequest<Result<TokenResponse>>;

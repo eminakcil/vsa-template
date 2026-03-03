@@ -22,7 +22,7 @@ public static class PersistenceServiceExtensions
 
                 options
                     .UseNpgsql(config.GetConnectionString("DefaultConnection"))
-                    .AddInterceptors(auditInterceptor, softDeleteInterceptor);
+                    .AddInterceptors(softDeleteInterceptor, auditInterceptor);
             }
         );
 
