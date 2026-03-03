@@ -19,7 +19,7 @@ try
 
     builder
         .Services.AddPersistenceServices(builder.Configuration)
-        .AddApplicationServices()
+        .AddApplicationServices(builder.Configuration)
         .AddIdentityServices(builder.Configuration)
         .AddPresentationServices()
         .AddHttpContextAccessor();
