@@ -4,7 +4,7 @@ using VsaTemplate.Infrastructure.Persistence.Interceptors;
 
 namespace VsaTemplate.DependencyInjection;
 
-public static class DatabaseExtension
+public static class PersistenceServiceExtensions
 {
     public static IServiceCollection AddPersistenceServices(
         this IServiceCollection services,

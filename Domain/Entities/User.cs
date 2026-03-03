@@ -1,4 +1,5 @@
 using VsaTemplate.Common.Abstractions;
+using VsaTemplate.Domain.Constants;
 
 namespace VsaTemplate.Domain.Entities;
 
@@ -22,6 +23,9 @@ public sealed class User : BaseEntity
     {
         if (string.IsNullOrWhiteSpace(email))
             throw new ArgumentNullException(nameof(email));
+
+        if (role != Roles.Admin && role != Roles.User)
+            throw new ArgumentException("Geçersiz rol.", nameof(role));
 
         Id = Guid.NewGuid();
         Email = email;
