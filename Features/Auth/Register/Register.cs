@@ -2,8 +2,8 @@ using FluentValidation;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using VsaTemplate.Common.Abstractions;
-using VsaTemplate.Domain.Entities;
 using VsaTemplate.Common.Models;
+using VsaTemplate.Domain.Entities;
 using VsaTemplate.Extensions;
 using VsaTemplate.Infrastructure.Persistence;
 using BC = BCrypt.Net.BCrypt;
@@ -25,13 +25,8 @@ public class RegisterHandler(AppDbContext context) : IRequestHandler<RegisterCom
             return Result<Guid>.Failure(Error.Conflict("Bu e-posta adresi zaten kullanımda."));
         }
 
-        var user = new User
-        {
-            Id = Guid.NewGuid(),
-            Email = request.Email,
-            PasswordHash = BC.HashPassword(request.Password),
-            CreatedAt = DateTimeOffset.UtcNow,
-        };
+        var passwordHash = BC.HashPassword(request.Password);
+        var user = new User(request.Email, passwordHash);
 
         context.Users.Add(user);
         await context.SaveChangesAsync(cancellationToken);
