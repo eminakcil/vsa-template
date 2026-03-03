@@ -21,7 +21,7 @@ public static class PersistenceServiceExtensions
                 var softDeleteInterceptor = sp.GetRequiredService<SoftDeleteInterceptor>();
 
                 options
-                    .UseInMemoryDatabase("VsaTemplateDb")
+                    .UseNpgsql(config.GetConnectionString("DefaultConnection"))
                     .AddInterceptors(auditInterceptor, softDeleteInterceptor);
             }
         );

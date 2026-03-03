@@ -8,4 +8,5 @@ public interface IJwtProvider
 {
     TokenResponse Generate(User user);
     string GenerateRefreshToken();
+    System.Security.Claims.ClaimsPrincipal? ValidateToken(string token);
 }

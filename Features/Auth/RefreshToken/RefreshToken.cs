@@ -1,3 +1,5 @@
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using VsaTemplate.Common.Abstractions;
@@ -18,12 +20,34 @@ public class RefreshTokenHandler(AppDbContext context, IJwtProvider jwtProvider)
         CancellationToken cancellationToken
     )
     {
-        var user = await context.Users.FirstOrDefaultAsync(
-            u => u.RefreshToken == request.RefreshToken,
-            cancellationToken
+        var principal = jwtProvider.ValidateToken(request.AccessToken);
+        if (principal is null)
+        {
+            return Result<TokenResponse>.Failure(
+                Error.Unauthorized("Geçersiz veya bozuk Access Token.")
+            );
+        }
+
+        var userIdString = principal.FindFirstValue(JwtRegisteredClaimNames.Sub);
+        if (!Guid.TryParse(userIdString, out var userId))
+        {
+            return Result<TokenResponse>.Failure(Error.Unauthorized("Token içeriği geçersiz."));
+        }
+
+        var user = await context
+            .Users.Include(u => u.RefreshTokens)
+            .FirstOrDefaultAsync(u => u.Id == userId, cancellationToken);
+
+        if (user is null)
+        {
+            return Result<TokenResponse>.Failure(Error.Unauthorized("Kullanıcı bulunamadı."));
+        }
+
+        var refreshToken = user.RefreshTokens.FirstOrDefault(rt =>
+            rt.Token == request.RefreshToken
         );
 
-        if (user is null || user.RefreshTokenExpiryTime <= DateTimeOffset.UtcNow)
+        if (refreshToken is null || refreshToken.ExpiryTime <= DateTimeOffset.UtcNow)
         {
             return Result<TokenResponse>.Failure(
                 Error.Unauthorized("Oturum süresi dolmuş, lütfen tekrar giriş yapın.")
@@ -32,7 +56,7 @@ public class RefreshTokenHandler(AppDbContext context, IJwtProvider jwtProvider)
 
         var tokenResponse = jwtProvider.Generate(user);
 
-        user.UpdateRefreshToken(tokenResponse.RefreshToken, DateTimeOffset.UtcNow.AddDays(7));
+        user.AddRefreshToken(tokenResponse.RefreshToken, DateTimeOffset.UtcNow.AddDays(7));
 
         await context.SaveChangesAsync(cancellationToken);
 

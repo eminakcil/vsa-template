@@ -33,7 +33,7 @@ public class LoginHandler(AppDbContext context, IJwtProvider jwtProvider)
 
         var tokenResponse = jwtProvider.Generate(user);
 
-        user.UpdateRefreshToken(tokenResponse.RefreshToken, DateTimeOffset.UtcNow.AddDays(7));
+        user.AddRefreshToken(tokenResponse.RefreshToken, DateTimeOffset.UtcNow.AddDays(7));
 
         await context.SaveChangesAsync(cancellationToken);
 

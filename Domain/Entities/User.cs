@@ -10,8 +10,8 @@ public sealed class User : BaseEntity
     public string PasswordHash { get; private set; }
     public RoleEnum Role { get; private set; }
 
-    public string? RefreshToken { get; private set; }
-    public DateTimeOffset? RefreshTokenExpiryTime { get; private set; }
+    private readonly List<RefreshToken> _refreshTokens = new();
+    public IReadOnlyCollection<RefreshToken> RefreshTokens => _refreshTokens.AsReadOnly();
 
     private User()
     {
@@ -33,12 +33,11 @@ public sealed class User : BaseEntity
         Role = role;
     }
 
-    public void UpdateRefreshToken(string refreshToken, DateTimeOffset expiryTime)
+    public void AddRefreshToken(string token, DateTimeOffset expiryTime)
     {
-        if (string.IsNullOrWhiteSpace(refreshToken))
-            throw new ArgumentException("Refresh token boş olamaz.", nameof(refreshToken));
+        if (string.IsNullOrWhiteSpace(token))
+            throw new ArgumentException("Refresh token boş olamaz.", nameof(token));
 
-        RefreshToken = refreshToken;
-        RefreshTokenExpiryTime = expiryTime;
+        _refreshTokens.Add(new RefreshToken(Id, token, expiryTime));
     }
 }
