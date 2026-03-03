@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.RateLimiting;
 using Microsoft.IdentityModel.Tokens;
 using VsaTemplate.Common.Abstractions;
 using VsaTemplate.Common.Authorization;
-using VsaTemplate.Common.Constants;
+using VsaTemplate.Domain.Constants;
 using VsaTemplate.Infrastructure.Authentication;
 
 namespace VsaTemplate.Extensions;

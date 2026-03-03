@@ -1,4 +1,4 @@
-namespace VsaTemplate.Common.Constants;
+namespace VsaTemplate.Domain.Constants;
 
 public static class Roles
 {

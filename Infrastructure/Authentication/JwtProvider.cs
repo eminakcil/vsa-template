@@ -5,8 +5,9 @@ using System.Text;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using VsaTemplate.Common.Abstractions;
-using VsaTemplate.Common.Constants;
+using VsaTemplate.Domain.Constants;
 using VsaTemplate.Domain.Entities;
+using VsaTemplate.Features.Users.Constants;
 
 namespace VsaTemplate.Infrastructure.Authentication;
 
@@ -17,9 +18,9 @@ public class JwtProvider(IOptions<JwtOptions> options) : IJwtProvider
     public TokenResponse Generate(User user)
     {
         var permissions =
-            user.Role == "Admin"
-                ? new[] { Permissions.UserRead, Permissions.UserWrite, Permissions.UserDelete }
-                : new[] { Permissions.UserDelete };
+            user.Role == Roles.Admin
+                ? new[] { UserPermissions.Read, UserPermissions.Write, UserPermissions.Delete }
+                : new[] { UserPermissions.Read };
 
         var claims = new List<Claim>
         {
