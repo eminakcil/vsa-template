@@ -18,7 +18,7 @@ public class JwtProvider(IOptions<JwtOptions> options) : IJwtProvider
     public TokenResponse Generate(User user)
     {
         var permissions =
-            user.Role == Roles.Admin
+            user.Role == Role.Admin
                 ? new[] { UserPermissions.Read, UserPermissions.Write, UserPermissions.Delete }
                 : new[] { UserPermissions.Read };
 
@@ -26,7 +26,7 @@ public class JwtProvider(IOptions<JwtOptions> options) : IJwtProvider
         {
             new(JwtRegisteredClaimNames.Sub, user.Id.ToString()),
             new(JwtRegisteredClaimNames.Email, user.Email),
-            new(ClaimTypes.Role, user.Role),
+            new(ClaimTypes.Role, user.Role.ToString()),
         };
 
         foreach (var permission in permissions)

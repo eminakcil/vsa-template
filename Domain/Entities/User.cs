@@ -1,5 +1,6 @@
 using VsaTemplate.Common.Abstractions;
 using VsaTemplate.Domain.Constants;
+using RoleEnum = VsaTemplate.Domain.Constants.Role;
 
 namespace VsaTemplate.Domain.Entities;
 
@@ -7,7 +8,7 @@ public sealed class User : BaseEntity
 {
     public string Email { get; private set; }
     public string PasswordHash { get; private set; }
-    public string Role { get; private set; }
+    public RoleEnum Role { get; private set; }
 
     public string? RefreshToken { get; private set; }
     public DateTimeOffset? RefreshTokenExpiryTime { get; private set; }
@@ -16,15 +17,14 @@ public sealed class User : BaseEntity
     {
         Email = null!;
         PasswordHash = null!;
-        Role = null!;
     }
 
-    public User(string email, string passwordHash, string role = "User")
+    public User(string email, string passwordHash, RoleEnum role = RoleEnum.User)
     {
         if (string.IsNullOrWhiteSpace(email))
             throw new ArgumentNullException(nameof(email));
 
-        if (role != Roles.Admin && role != Roles.User)
+        if (!Enum.IsDefined(typeof(RoleEnum), role))
             throw new ArgumentException("Geçersiz rol.", nameof(role));
 
         Id = Guid.NewGuid();

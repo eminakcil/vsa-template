@@ -52,7 +52,7 @@ public static class IdentityServicesExtension
 
         services.AddAuthorization(options =>
         {
-            options.AddPolicy("AdminOnly", policy => policy.RequireRole(Roles.Admin));
+            options.AddPolicy("AdminOnly", policy => policy.RequireRole(Role.Admin.ToString()));
         });
 
         services.AddRateLimiter(options =>
