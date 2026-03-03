@@ -1,5 +1,5 @@
 using Serilog;
-using VsaTemplate.Extensions;
+using VsaTemplate.DependencyInjection;
 
 Log.Logger = new LoggerConfiguration().WriteTo.Console().CreateBootstrapLogger();
 

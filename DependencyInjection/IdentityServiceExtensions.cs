@@ -9,7 +9,7 @@ using VsaTemplate.Common.Authorization;
 using VsaTemplate.Domain.Constants;
 using VsaTemplate.Infrastructure.Authentication;
 
-namespace VsaTemplate.Extensions;
+namespace VsaTemplate.DependencyInjection;
 
 public static class IdentityServicesExtension
 {

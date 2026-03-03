@@ -1,6 +1,6 @@
 using VsaTemplate.Common.Models;
 
-namespace VsaTemplate.Extensions;
+namespace VsaTemplate.Common.Extensions;
 
 public static class ResultExtensions
 {

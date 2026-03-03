@@ -1,7 +1,7 @@
 using FluentValidation;
 using VsaTemplate.Common.Behaviors;
 
-namespace VsaTemplate.Extensions;
+namespace VsaTemplate.DependencyInjection;
 
 public static class ApplicationServiceExtensions
 {

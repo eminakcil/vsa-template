@@ -1,8 +1,8 @@
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using VsaTemplate.Common.Abstractions;
+using VsaTemplate.Common.Extensions;
 using VsaTemplate.Common.Models;
-using VsaTemplate.Extensions;
 using VsaTemplate.Infrastructure.Persistence;
 
 namespace VsaTemplate.Features.Auth;

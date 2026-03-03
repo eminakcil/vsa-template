@@ -5,7 +5,7 @@ using Scalar.AspNetCore;
 using VsaTemplate.Common.Abstractions;
 using VsaTemplate.Infrastructure;
 
-namespace VsaTemplate.Extensions;
+namespace VsaTemplate.DependencyInjection;
 
 public static class PresentationExtensions
 {

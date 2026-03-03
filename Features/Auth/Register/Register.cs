@@ -2,9 +2,9 @@ using FluentValidation;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using VsaTemplate.Common.Abstractions;
+using VsaTemplate.Common.Extensions;
 using VsaTemplate.Common.Models;
 using VsaTemplate.Domain.Entities;
-using VsaTemplate.Extensions;
 using VsaTemplate.Infrastructure.Persistence;
 using BC = BCrypt.Net.BCrypt;
 

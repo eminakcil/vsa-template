@@ -2,7 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using VsaTemplate.Infrastructure.Persistence;
 using VsaTemplate.Infrastructure.Persistence.Interceptors;
 
-namespace VsaTemplate.Extensions;
+namespace VsaTemplate.DependencyInjection;
 
 public static class DatabaseExtension
 {

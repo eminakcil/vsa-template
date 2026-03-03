@@ -1,8 +1,8 @@
 using System.Security.Claims;
 using MediatR;
 using VsaTemplate.Common.Abstractions;
+using VsaTemplate.Common.Extensions;
 using VsaTemplate.Common.Models;
-using VsaTemplate.Extensions;
 
 namespace VsaTemplate.Features.Auth.Me;
 
