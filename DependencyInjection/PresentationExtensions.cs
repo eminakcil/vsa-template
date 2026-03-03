@@ -4,6 +4,7 @@ using Microsoft.Extensions.DependencyInjection.Extensions;
 using Scalar.AspNetCore;
 using VsaTemplate.Common.Abstractions;
 using VsaTemplate.Infrastructure;
+using VsaTemplate.Infrastructure.OpenApi;
 
 namespace VsaTemplate.DependencyInjection;
 
@@ -13,6 +14,11 @@ public static class PresentationExtensions
     {
         services.AddExceptionHandler<GlobalExceptionHandler>();
         services.AddProblemDetails();
+
+        services.AddOpenApi(options =>
+        {
+            options.AddDocumentTransformer<BearerSecuritySchemeTransformer>();
+        });
 
         services.AddEndpoints(Assembly.GetExecutingAssembly());
 

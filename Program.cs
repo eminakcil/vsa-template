@@ -21,7 +21,6 @@ try
         .Services.AddPersistenceServices(builder.Configuration)
         .AddApplicationServices()
         .AddIdentityServices(builder.Configuration)
-        .AddOpenApi()
         .AddPresentationServices()
         .AddHttpContextAccessor();
 
