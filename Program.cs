@@ -28,6 +28,8 @@ try
 
     var app = builder.Build();
 
+    app.ApplyMigrations();
+
     app.ConfigurePipeline();
 
     app.Lifetime.ApplicationStarted.Register(() =>

@@ -28,4 +28,14 @@ public static class PersistenceServiceExtensions
 
         return services;
     }
+
+    public static IApplicationBuilder ApplyMigrations(this IApplicationBuilder app)
+    {
+        using IServiceScope scope = app.ApplicationServices.CreateScope();
+        using AppDbContext context = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+
+        context.Database.Migrate();
+
+        return app;
+    }
 }
