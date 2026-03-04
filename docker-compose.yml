@@ -21,6 +21,9 @@ services:
         condition: service_healthy
     volumes:
       - .:/src
+      - /src/bin
+      - /src/obj
+      - /src/Logs
       - ./Logs:/app/Logs
 
   db:

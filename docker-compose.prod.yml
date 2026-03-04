@@ -1,0 +1,42 @@
+services:
+  api:
+    image: ghcr.io/eminakcil/vsa-template:latest
+    container_name: vsa-api-prod
+    restart: always
+    env_file: .env
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - ConnectionStrings__DefaultConnection=Host=db;Port=5432;Username=${DB_USER};Password=${DB_PASSWORD};Database=${DB_NAME}
+      - LuckyPenny__LicenseKey=${LUCKYPENNY_LICENSE_KEY}
+      - Jwt__Key=${JWT_KEY}
+    ports:
+      - "80:8080"
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      - /var/log/vsa-template:/app/Logs
+
+  db:
+    image: postgres:16-alpine
+    container_name: vsa-db-prod
+    restart: always
+    env_file: .env
+    environment:
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_DB=${DB_NAME}
+    volumes:
+      - vsa_prod_data:/var/lib/postgresql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER} -d ${DB_NAME}"]
+      interval: 10s
+      retries: 5
+
+volumes:
+  vsa_prod_data:
