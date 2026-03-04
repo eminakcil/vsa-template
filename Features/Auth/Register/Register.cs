@@ -1,3 +1,4 @@
+using Destructurama.Attributed;
 using FluentValidation;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -10,7 +11,8 @@ using BC = BCrypt.Net.BCrypt;
 
 namespace VsaTemplate.Features.Auth.Register;
 
-public record RegisterCommand(string Email, string Password) : IRequest<Result<Guid>>;
+public record RegisterCommand(string Email, [property: NotLogged] string Password)
+    : IRequest<Result<Guid>>;
 
 public class RegisterHandler(AppDbContext context) : IRequestHandler<RegisterCommand, Result<Guid>>
 {

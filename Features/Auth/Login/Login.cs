@@ -1,3 +1,4 @@
+using Destructurama.Attributed;
 using FluentValidation;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -9,7 +10,8 @@ using BC = BCrypt.Net.BCrypt;
 
 namespace VsaTemplate.Features.Auth.Login;
 
-public record LoginCommand(string Email, string Password) : IRequest<Result<TokenResponse>>;
+public record LoginCommand(string Email, [property: NotLogged] string Password)
+    : IRequest<Result<TokenResponse>>;
 
 public class LoginHandler(AppDbContext context, IJwtProvider jwtProvider)
     : IRequestHandler<LoginCommand, Result<TokenResponse>>

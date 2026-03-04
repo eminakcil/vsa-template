@@ -1,3 +1,4 @@
+using Destructurama;
 using Serilog;
 using VsaTemplate.DependencyInjection;
 
@@ -14,6 +15,7 @@ try
             configuration
                 .ReadFrom.Configuration(context.Configuration)
                 .ReadFrom.Services(services)
+                .Destructure.UsingAttributes()
                 .Enrich.FromLogContext()
     );
 
