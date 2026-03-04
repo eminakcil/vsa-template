@@ -27,6 +27,7 @@ public static class ApplicationServiceExtensions
             }
 
             config.RegisterServicesFromAssembly(assembly);
+            config.AddOpenBehavior(typeof(LoggingBehavior<,>));
 
             config.AddOpenBehavior(typeof(ValidationBehavior<,>));
         });
