@@ -1,0 +1,44 @@
+services:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: build
+    container_name: vsa-api-dev
+    ports:
+      - "5164:8080"
+    env_file:
+      - .env
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - DOTNET_USE_POLLING_FILE_WATCHER=1
+      - ConnectionStrings__DefaultConnection=Host=db;Port=5432;Username=${DB_USER};Password=${DB_PASSWORD};Database=${DB_NAME}
+      - LuckyPenny__LicenseKey=${LUCKYPENNY_LICENSE_KEY}
+      - Jwt__Key=${JWT_KEY}
+    entrypoint: dotnet watch run --project VsaTemplate.csproj --urls=http://+:8080 --no-launch-profile
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      - .:/src
+      - ./Logs:/app/Logs
+
+  db:
+    image: postgres:latest
+    container_name: vsa-db-dev
+    env_file:
+      - .env
+    environment:
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_DB=${DB_NAME}
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER} -d ${DB_NAME}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    volumes:
+      - vsa_db_data:/var/lib/postgresql
+
+volumes:
+  vsa_db_data:

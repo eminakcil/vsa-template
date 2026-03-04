@@ -4,6 +4,8 @@ obj/
 appsettings.json
 appsettings.*.json
 
+.env
+
 !appsettings.example.json
 
 Logs/
