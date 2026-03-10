@@ -1,16 +1,16 @@
-using System.Security.Claims;
 using MediatR;
 using VsaTemplate.Common.Abstractions;
 using VsaTemplate.Common.Extensions;
 using VsaTemplate.Common.Models;
+using RoleEnum = VsaTemplate.Domain.Constants.Role;
 
 namespace VsaTemplate.Features.Auth.Me;
 
-public record GetMeResponse(Guid Id, string Email, string Role);
+public record GetMeResponse(Guid Id, string Email, RoleEnum Role);
 
 public record GetMeQuery() : IRequest<Result<GetMeResponse>>;
 
-public class GetMeHandler(IHttpContextAccessor httpContextAccessor)
+public class GetMeHandler(ICurrentUserService currentUserService)
     : IRequestHandler<GetMeQuery, Result<GetMeResponse>>
 {
     public async Task<Result<GetMeResponse>> Handle(
@@ -18,16 +18,9 @@ public class GetMeHandler(IHttpContextAccessor httpContextAccessor)
         CancellationToken cancellationToken
     )
     {
-        var user = httpContextAccessor.HttpContext?.User;
-
-        if (user?.Identity?.IsAuthenticated != true)
-        {
-            return Result<GetMeResponse>.Failure(Error.Unauthorized("Oturum bulunamadı."));
-        }
-
-        var userId = Guid.Parse(user.FindFirstValue(ClaimTypes.NameIdentifier)!);
-        var email = user.FindFirstValue(ClaimTypes.Email)!;
-        var role = user.FindFirstValue(ClaimTypes.Role)!;
+        var userId = currentUserService.UserId;
+        var email = currentUserService.Email;
+        var role = currentUserService.Role;
 
         var response = new GetMeResponse(userId, email, role);
 

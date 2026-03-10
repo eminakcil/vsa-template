@@ -29,6 +29,7 @@ public static class IdentityServicesExtension
         services.Configure<JwtOptions>(config.GetSection(JwtOptions.SectionName));
 
         services.AddScoped<IJwtProvider, JwtProvider>();
+        services.AddScoped<ICurrentUserService, CurrentUserService>();
 
         services.AddSingleton<IAuthorizationHandler, PermissionAuthorizationHandler>();
         services.AddSingleton<IAuthorizationPolicyProvider, PermissionPolicyProvider>();
